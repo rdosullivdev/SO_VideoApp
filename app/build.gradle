@@ -55,6 +55,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
+    //markdown
+    implementation 'io.noties.markwon:core:4.6.2'
+
     //logging
     implementation 'com.jakewharton.timber:timber:5.0.1'
 

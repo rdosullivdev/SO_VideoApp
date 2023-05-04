@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.silverorange.videoplayer.databinding.ActivityMainBinding
+import io.noties.markwon.Markwon
 
 class MainActivity : AppCompatActivity(), Player.Listener {
 
     private val viewModel: VideoViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var exoPlayer: ExoPlayer
+    private lateinit var markWon: Markwon
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity(), Player.Listener {
             binding.playerView.player = it
             it.addListener(this@MainActivity)
         }
+        markWon = Markwon.create(applicationContext)
 
         with(viewModel) {
             videoListState.observe(this@MainActivity) { videoList ->
@@ -33,6 +36,11 @@ class MainActivity : AppCompatActivity(), Player.Listener {
                     }
                     exoPlayer.prepare()
                 }
+            }
+            currentVideoState.observe(this@MainActivity) { video ->
+                binding.videoTitle.text = video.title
+                binding.videoAuthor.text = video.author
+                markWon.setMarkdown(binding.videoDesc, video.descMarkdown)
             }
         }
     }
